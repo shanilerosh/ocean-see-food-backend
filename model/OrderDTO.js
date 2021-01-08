@@ -1,13 +1,29 @@
-// const mongoose = require("mongoose");
-// const ItemDTO = mongoose.Schema({
-//   itemName: {
-//     type: String,
-//     required: true,
-//   },
-//   itemPrice: {
-//     type: Number,
-//     required: true,
-//   },
-// });
+const mongoose = require("mongoose");
+const OrderDTO = mongoose.Schema({
+  requiredDate: {
+    type: Date,
+    required: true,
+  },
+  items: [
+    {
+      itemId: String,
+      itemName: String,
+      itemPrice: Number,
+      itemQty: Number,
+    },
+  ],
+  customer: {
+    id: String,
+    customerName: String,
+  },
+  user: {
+    userId: String,
+    userName: String,
+  },
+  orderDate: {
+    type: Date,
+    required: true,
+  },
+});
 
-// module.exports = mongoose.model("item", ItemDTO);
+module.exports = mongoose.model("Order", OrderDTO);

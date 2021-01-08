@@ -8,12 +8,13 @@ const saveUser = (req, res) => {
       res.status(200).json({ isDone: false, data: "User already exist" });
     }
   });
-
   bcrypt
     .hash(req.body.password, 5)
     .then((pass) => {
       const user = new UserDTO({
         username: req.body.username,
+        role: req.body.role,
+        montlyTarget: req.body.monthlyTarget,
         password: pass,
       });
 
@@ -32,6 +33,7 @@ const saveUser = (req, res) => {
 };
 
 const checkuser = (req, res) => {
+  console.log(req.body.username);
   UserDTO.findOne({ username: req.body.username })
     .then((user) => {
       if (!user) {
@@ -41,7 +43,30 @@ const checkuser = (req, res) => {
           result
             ? res
                 .status(200)
-                .json({ isDone: true, data: "Successfully Loged Id" })
+                .json({ isDone: true, data: "Successfully Loged Id", user })
+            : res.status(200).json({ isDone: false, data: "Wrong Password" });
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ err });
+    });
+};
+
+const checkAdmin = (req, res) => {
+  UserDTO.findOne({ username: req.body.username })
+    .then((user) => {
+      if (!user) {
+        res.status(200).json({ isDone: false, data: "User Doesn't Exist" });
+      } else if (user.role != "admin") {
+        res.status(200).json({ isDone: false, data: "You are not an admin" });
+      } else {
+        bcrypt.compare(req.body.password, user.password).then((result) => {
+          result
+            ? res.status(200).json({
+                isDone: true,
+                data: `Welcome ${user.username}! Successfully Loged Id`,
+              })
             : res.status(200).json({ isDone: false, data: "Wrong Password" });
         });
       }
@@ -54,4 +79,5 @@ const checkuser = (req, res) => {
 module.exports = {
   saveUser,
   checkuser,
+  checkAdmin,
 };

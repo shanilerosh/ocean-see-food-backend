@@ -1,32 +1,42 @@
-// const ItemDTO = require("../model/ItemDTO");
+const OrderDTO = require("../model/OrderDTO");
+const orderRouter = require("../route/OrderRouter");
 
-// const saveItem = (req, res) => {
-//   const item = new ItemDTO({
-//     itemName: req.body.itemName,
-//     itemPrice: req.body.itemPrice,
-//   });
+const placeOrder = (req, res) => {
+  const order = new OrderDTO({
+    requiredDate: req.body.requiredDate,
+    items: req.body.items,
+    customer: req.body.customer,
+    user: req.body.user,
+    orderDate: new Date(),
+  });
 
-//   item
-//     .save()
-//     .then((res) => {
-//       console.log(res);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
+  order
+    .save()
+    .then((all) => {
+      res.status(200).json({ isDone: true, data: all });
+    })
+    .catch((err) => {
+      res.status(200).json({ isDone: false, data: err });
+    });
+};
 
-// const findItems = (req, res) => {
-//   ItemDTO.find()
-//     .then((all) => {
-//       res.status(200).json({ isDone: true, data: all });
-//     })
-//     .catch((err) => {
-//       res.status(500).json({ err });
-//     });
-// };
+const viewOrders = (req, res) => {
+  OrderDTO.find({
+    orderDate: {
+      $gte: new Date(req.query.dateFrom),
+      $lt: new Date(req.query.dateTo),
+    },
+    "user.userId": req.query.userId,
+  })
+    .then((data) => {
+      res.status(200).json({ isDone: true, data });
+    })
+    .catch((err) => {
+      res.status(200).json({ isDone: true, err });
+    });
+};
 
-// module.exports = {
-//   saveItem,
-//   findItems,
-// };
+module.exports = {
+  placeOrder,
+  viewOrders,
+};
