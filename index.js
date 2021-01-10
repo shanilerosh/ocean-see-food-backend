@@ -44,6 +44,10 @@ mongoose
     console.log(err);
   });
 
+app.get("/", (req, res) => {
+  res.send("Hepp");
+});
+
 app.use("/api/v1/item", itemRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/customer", customrRouter);
