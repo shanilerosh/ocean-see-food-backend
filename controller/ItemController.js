@@ -9,10 +9,10 @@ const saveItem = (req, res) => {
   item
     .save()
     .then((res) => {
-      console.log(res);
+      res.status(200).json({ isDone: true, data: res });
     })
     .catch((err) => {
-      console.log(err);
+      res.status(500).json({ err });
     });
 };
 
