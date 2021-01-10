@@ -8,6 +8,6 @@ const itemRouter = express.Router();
 
 itemRouter.post("/saveItem", saveItem);
 itemRouter.get("/getAllItems", findItems);
-itemRouter.get("/deleteItem", deleteItem);
+itemRouter.post("/deleteItem", deleteItem);
 
 module.exports = itemRouter;
