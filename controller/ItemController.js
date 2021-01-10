@@ -8,8 +8,8 @@ const saveItem = (req, res) => {
 
   item
     .save()
-    .then((res) => {
-      res.status(200).json({ isDone: true, data: res });
+    .then((data) => {
+      res.status(200).json({ isDone: true, data });
     })
     .catch((err) => {
       res.status(500).json({ err });
