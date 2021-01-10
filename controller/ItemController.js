@@ -26,7 +26,18 @@ const findItems = (req, res) => {
     });
 };
 
+const deleteItem = (req, res) => {
+  ItemDTO.deleteOne({ _id: req.body.id })
+    .then((all) => {
+      res.status(200).json({ isDone: true, data: all });
+    })
+    .catch((err) => {
+      res.status(500).json({ err });
+    });
+};
+
 module.exports = {
   saveItem,
   findItems,
+  deleteItem,
 };
