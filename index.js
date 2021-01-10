@@ -7,6 +7,7 @@ const userRouter = require("./route/UserRouter");
 const customrRouter = require("./route/CustomerRouter");
 const orderRouter = require("./route/OrderRouter");
 const app = express();
+const socket = require("socket.io");
 
 // MiddleWear
 app.use(cors());
@@ -23,8 +24,15 @@ mongoose
     useCreateIndex: true,
   })
   .then((result) => {
-    app.listen(1234, () => {
+    let server = app.listen(1234, () => {
       console.log("listenin at http://localhost:1234");
+    });
+    const io = socket(server);
+    io.on("connection", (s) => {
+      console.log("Connected");
+      s.on("placeOrder", (data) => {
+        s.broadcast.emit("broadcast", data);
+      });
     });
   })
   .catch((err) => {

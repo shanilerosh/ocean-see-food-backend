@@ -1,3 +1,4 @@
+const socket = require("..");
 const OrderDTO = require("../model/OrderDTO");
 const orderRouter = require("../route/OrderRouter");
 
@@ -7,7 +8,9 @@ const placeOrder = (req, res) => {
     items: req.body.items,
     customer: req.body.customer,
     user: req.body.user,
+    orderTotal: req.body.total,
     orderDate: new Date(),
+    status: "pending",
   });
 
   order
@@ -17,6 +20,16 @@ const placeOrder = (req, res) => {
     })
     .catch((err) => {
       res.status(200).json({ isDone: false, data: err });
+    });
+};
+
+const getAllOrders = (req, res) => {
+  OrderDTO.find()
+    .then((data) => {
+      res.status(200).json({ isDone: true, data });
+    })
+    .catch((err) => {
+      res.status(200).json({ isDone: true, err });
     });
 };
 
@@ -39,4 +52,5 @@ const viewOrders = (req, res) => {
 module.exports = {
   placeOrder,
   viewOrders,
+  getAllOrders,
 };

@@ -16,12 +16,19 @@ const OrderDTO = mongoose.Schema({
     id: String,
     customerName: String,
   },
+  status: {
+    type: String,
+  },
   user: {
-    userId: String,
+    peni: String,
     userName: String,
   },
   orderDate: {
     type: Date,
+    required: true,
+  },
+  orderTotal: {
+    type: Number,
     required: true,
   },
 });

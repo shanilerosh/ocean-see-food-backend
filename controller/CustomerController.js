@@ -1,7 +1,7 @@
 const CustomerDTO = require("../model/CustomerDTO");
+const socket = require("../socket");
 
 const saveCustomer = (req, res) => {
-  console.log(req.body);
   CustomerDTO.findOne({ customerName: req.body.customerName })
     .then((data) => {
       if (data) {
