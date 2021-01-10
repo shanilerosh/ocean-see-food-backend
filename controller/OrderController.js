@@ -39,7 +39,7 @@ const viewOrders = (req, res) => {
       $gte: new Date(req.query.dateFrom),
       $lt: new Date(req.query.dateTo),
     },
-    "user.userId": req.query.userId,
+    _id: req.query.userId,
   })
     .then((data) => {
       res.status(200).json({ isDone: true, data });
