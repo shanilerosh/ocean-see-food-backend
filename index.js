@@ -18,12 +18,16 @@ app.get("/", function (req, res) {
 });
 
 mongoose
-  .connect("mongodb://localhost:27017/oceanseafood", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-  })
+  // .connect("mongodb://localhost:27017/oceanseafood", {
+  .connect(
+    "mongodb+srv://shanil:Outsider_2019@cluster0.5c2oi.mongodb.net/sea-food?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+      useCreateIndex: true,
+    }
+  )
   .then((result) => {
     let server = app.listen(port, () => {
       console.log("listenin at http://localhost:1234");
