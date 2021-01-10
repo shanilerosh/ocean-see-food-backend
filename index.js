@@ -8,6 +8,7 @@ const customrRouter = require("./route/CustomerRouter");
 const orderRouter = require("./route/OrderRouter");
 const app = express();
 const socket = require("socket.io");
+const port = process.env.PORT || 1234;
 
 // MiddleWear
 app.use(cors());
@@ -24,7 +25,7 @@ mongoose
     useCreateIndex: true,
   })
   .then((result) => {
-    let server = app.listen(1234, () => {
+    let server = app.listen(port, () => {
       console.log("listenin at http://localhost:1234");
     });
     const io = socket(server);
