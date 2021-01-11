@@ -16,6 +16,7 @@ const saveUser = (req, res) => {
         role: req.body.role,
         montlyTarget: req.body.monthlyTarget,
         password: pass,
+        state: req.body.state,
       });
 
       user

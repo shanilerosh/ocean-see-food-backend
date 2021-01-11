@@ -15,6 +15,9 @@ const UserDTO = mongoose.Schema({
   monthlyTarget: {
     type: Number,
   },
+  state: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("user", UserDTO);
