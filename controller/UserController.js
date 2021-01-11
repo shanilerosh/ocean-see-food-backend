@@ -77,8 +77,54 @@ const checkAdmin = (req, res) => {
     });
 };
 
+const getAllUsers = (req, res) => {
+  //   Check for duplicate user
+  UserDTO.find()
+    .then((data) => {
+      if (data) {
+        res.status(200).json({ isDone: true, data });
+      } else {
+        res.status(200).json({ isDone: false, data: "Error try again" });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ isDone: false, data: err });
+    });
+};
+
+const updateStatus = (req, res) => {
+  UserDTO.findOneAndUpdate({ _id: req.body.id }, { state: req.body.state })
+    .then((data) => {
+      if (data) {
+        res.status(200).json({ isDone: true, data });
+      } else {
+        res.status(200).json({ isDone: false, data: "Error try again" });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ isDone: false, data: err });
+    });
+};
+
+const deleteUser = (req, res) => {
+  UserDTO.deleteOne({ _id: req.body.id })
+    .then((data) => {
+      if (data) {
+        res.status(200).json({ isDone: true, data });
+      } else {
+        res.status(200).json({ isDone: false, data: "Error try again" });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ isDone: false, data: err });
+    });
+};
+
 module.exports = {
   saveUser,
   checkuser,
   checkAdmin,
+  deleteUser,
+  updateStatus,
+  getAllUsers,
 };
